@@ -1,0 +1,49 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'style.css' %}" />
+        <title>Todo List</title>
+    </head>
+  
+<header class="header">
+      <div class="container">
+        <a href="{%url 'home'%}" class="logo">Todo</a>
+        <div class="nav">
+          <a href="{%url 'home'%}"><i class="bi bi-house-fill"></i> Home</a>
+            {% if request.user.is_authenticated %}
+                  <a href="{% url 'home' %}"><i class="bi bi-list-task"></i> My Posts</a>
+                  <a href="{% url 'post-create' %}"><i class="bi bi-plus-circle"></i> Create post</a>
+              <a href="#">Hi {{request.user | title}}</a>
+
+                  <a href="{% url 'logout' %}" class="btn btn-outline">Logout</a>
+            {% else %}
+                  <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
+                  <a href="{% url 'register' %}" class="btn btn-primary">Join Now</a>
+            {% endif %}
+         </div>
+      </div>
+</header>
+<body>
+  {% if messages %}     
+    <div class ='messages'>
+      {% for message in messages %}
+        <div class="alert {% if message.tags%}alert-{{message.tags}}"{% endif %}>
+          {{message}}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif%}
+  {% block content %}
+  {% endblock content %}
+  
+</body>
+<footer class="footer">
+      <div class="container">
+          <p>© Copyright {% now "Y" %} by <a href="replit">Python Tutorial</a></p>
+      </div>
+</footer>
+</html>
